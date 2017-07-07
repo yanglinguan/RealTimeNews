@@ -2,7 +2,7 @@
 How do I get set up?
 
 Summary of set up for first Project: Collaborative Online Judge
-Install NodeJs:
+# Install NodeJs:
 
 sudo apt-get update
 
@@ -10,19 +10,19 @@ curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 
 sudo apt-get install -y nodejs
 
-Install Nodemon
+# Install Nodemon
 
 npm install -g nodemon
 
-Install git
+# Install git
 
 sudo apt-get install git
 
-Install angular/cli
+# Install angular/cli
 
 npm install -g @angular/cli
 
-Install Redis
+# Install Redis
 
 wget http://download.redis.io/releases/redis-3.2.6.tar.gz
 
@@ -38,9 +38,9 @@ cd utils
 
 sudo ./install_server.sh
 
-Install python 2.7: This is installed already in Ubuntu
+# Install python 2.7: This is installed already in Ubuntu
 
-Install pip:
+# Install pip:
 
 (sudo apt-get update)
 
@@ -48,7 +48,7 @@ sudo apt install python-pip
 
 sudo pip install Flask
 
-Install Docker:
+# Install Docker:
 
 curl -fsSL https://get.docker.com/ | sh
 
@@ -60,7 +60,7 @@ sudo usermod -aG docker $(whoami)
 
 To start docker when the system boots: sudo systemctl enable docker
 
-Install Nginx
+# Install Nginx
 (For ubuntu 16.04) Add following two lines into /etc/apt/sources.list
 
 deb http://nginx.org/packages/ubuntu/ xenial nginx
