@@ -12,7 +12,7 @@ sudo apt-get install -y nodejs
 
 # Install Nodemon
 
-npm install -g nodemon
+sudo npm install -g nodemon
 
 # Install git
 
@@ -20,7 +20,7 @@ sudo apt-get install git
 
 # Install angular/cli
 
-npm install -g @angular/cli
+sudo npm install -g @angular/cli
 
 # Install Redis
 
