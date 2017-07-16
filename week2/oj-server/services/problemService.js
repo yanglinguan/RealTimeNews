@@ -86,7 +86,7 @@ const addProblem = function(newProblem) {
             } else {
                 ProblemModel.count({}, function(err, num){
                     newProblem.id = num + 1;
-                    let mongoProblem = new ProblemModel(problem);
+                    let mongoProblem = new ProblemModel(newProblem);
                     mongoProblem.save();
                     resolve(mongoProblem)
                 })

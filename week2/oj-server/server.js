@@ -1,6 +1,12 @@
 const express = require('express')
 const app = express()
 
+const mongoose = require('mongoose');
+mongoose.connect(
+"mongodb://user:test@ds023550.mlab.com:23550/cs503"
+);
+
+
 const restRouter = require('./routes/rest')
 
 app.get('/', function (req, res) {

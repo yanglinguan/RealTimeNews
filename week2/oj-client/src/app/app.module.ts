@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms"
+import { HttpModule } from "@angular/Http"
 import { Routing } from './app.routes'
 
 import { DataService } from './services/data.service'
