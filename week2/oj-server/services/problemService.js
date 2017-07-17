@@ -35,6 +35,7 @@ Find all unique quadruplets in the array which gives the sum of target.`,
 
 
 const ProblemModel = require('../models/problemModel');
+
 const getProblems = function() {
     // return new Promise((resolve, reject) => {
     //     resolve(problems);
@@ -45,10 +46,9 @@ const getProblems = function() {
             if(err) {
                 reject(err);
             } else {
-                resolve(problems)
+                resolve(problems);
             }
         })
-
     })
 }
 
@@ -57,7 +57,7 @@ const getProblem = function(id) {
     //     resolve(problems.find(p => p.id === id));
     // })
 
-    return new Promis((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         ProblemModel.findOne({id: id}, function(err, problem) {
             if(err) {
                 reject(err)
@@ -86,6 +86,7 @@ const addProblem = function(newProblem) {
             } else {
                 ProblemModel.count({}, function(err, num){
                     newProblem.id = num + 1;
+                    // create mongodb object
                     let mongoProblem = new ProblemModel(newProblem);
                     mongoProblem.save();
                     resolve(mongoProblem)

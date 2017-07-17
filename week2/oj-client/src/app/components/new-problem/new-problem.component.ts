@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Problem } from "app/data-structure/problem"
 
-// .freeze: 
+// .freeze: object cannot be changed
 const DEFAULT_PROBLEM: Problem = Object.freeze({
-  id:0,
+  id: 0,
   name: '',
   desc: '',
-  difficulty: ''
+  difficulty: 'easy'
 })
 
 @Component({
@@ -15,15 +15,23 @@ const DEFAULT_PROBLEM: Problem = Object.freeze({
   styleUrls: ['./new-problem.component.css']
 })
 export class NewProblemComponent implements OnInit {
-  newProblem: Problem = Object.assign({}, DEFAULT_PROBLEM)
-  difficulties: string[]
+  // Object.assign create shadow copy
+  // after user submit the new problem, the newProblem reset back to default problem
+  newProblem: Problem = Object.assign({}, DEFAULT_PROBLEM);
+  difficulties: string[] = ['easy', 'medium', 'hard', 'super'];
+
   constructor(@Inject('data') private dataService) { }
 
   ngOnInit() {
   }
 
-  
+  addProblem() {
+    this.dataService.addProblem(this.newProblem)
+    .catch(err => console.log(err));
+    // should reset the newProblem
+    this.newProblem = Object.assign({}, DEFAULT_PROBLEM);
 
-  
+
+  }
 
 }
