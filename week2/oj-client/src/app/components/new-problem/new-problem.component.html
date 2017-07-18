@@ -10,10 +10,10 @@
     </div>
     <div class="form-group">
       <label for="problemDesc">Problem Description</label>
-      <input type="text" class="form-control" 
+      <textarea type="text" class="form-control" rows="4"
       id="problemDesc" name="problemDesc"
       placeholder="Input description" required
-      [(ngModel)]="newProblem.desc">
+      [(ngModel)]="newProblem.desc"></textarea>
     </div>
     <div class="form-group">
       <label for="difficulty">Problem Difficulty</label>
