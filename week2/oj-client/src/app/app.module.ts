@@ -5,6 +5,7 @@ import { HttpModule } from "@angular/http"
 import { Routing } from './app.routes'
 
 import { DataService } from './services/data.service'
+import { AuthService } from './services/auth.service'
 
 import { AppComponent } from './app.component';
 import { ProblemListComponent } from './components/problem-list/problem-list.component';
@@ -32,8 +33,17 @@ import { NavbarComponent } from './components/navbar/navbar.component'
   providers: [
     {
       provide: 'data',
-      useClass: DataService
-    }
+      useClass: DataService,
+    },
+    // globally privde the service 
+    // {
+    //   provide: 'auth',
+    //   useClass: AuthService,
+    // }
+    AuthService // not globally privde
+    // if use AuthService directly, it is not gloablly provide
+    // then when inject service, we need to import AuthService when we need it 
+    // example is in navbar.component.ts
   ],
   bootstrap: [AppComponent]
 })
