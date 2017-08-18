@@ -1,0 +1,9 @@
+.login-panel {
+  margin: 20px auto;
+  width: 60%;
+}
+
+.error-message {
+  padding-left: 20px;
+  color: red;
+}
