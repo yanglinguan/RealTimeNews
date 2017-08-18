@@ -1,4 +1,5 @@
 import './NewsPanel.css';
+import Auth from '../Auth/Auth';
 import React from 'react';
 import NewsCard from '../NewsCard/NewsCard';
 import _ from 'lodash';
@@ -28,7 +29,10 @@ class NewsPanel extends React.Component {
   loadMoreNews() {
     let request = new Request('http://localhost:3000/news', {
       method: 'GET',
-      cache: false
+      cache: false,
+      headers: {
+        "Authen"
+      }
     });
 
     fetch(request)
