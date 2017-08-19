@@ -15,10 +15,10 @@ class NewsPanel extends React.Component {
     this.loadMoreNews();
     // this only be called once a second
     this.loadMoreNews = _.debounce(this.loadMoreNews, 1000)
-    window.addEventListener('scroll', this.handleSCroll);
+    window.addEventListener('scroll', this.handleScroll);
   }
 
-  handleSCroll() {
+  handleScroll() {
     let scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
     if ((window.innerHeight + scrollY) >= (document.body.offsetHeight - 50)) {
       console.log('Load more news')
@@ -31,7 +31,7 @@ class NewsPanel extends React.Component {
       method: 'GET',
       cache: false,
       headers: {
-        "Authen"
+        'Authorization': 'bearer ' + Auth.getToken(),
       }
     });
 

@@ -54,7 +54,7 @@ router.post('/login', (req, res, next) => {
   }
 
   // use local-login Strategy
-  return passport.authenticate('local-login', (err, token, userDate) => {
+  return passport.authenticate('local-login', (err, token, userData) => {
     if (err) {
       if (err.name === 'IncorrectCredentialsError') {
         return res.status(400).json({
@@ -67,10 +67,10 @@ router.post('/login', (req, res, next) => {
         message: 'Could not process the form: ' + err.message
       });
     }
-
+    // console.log(token)
     return res.json({
       success: true,
-      message: 'You have successfully logged in!'.
+      message: 'You have successfully logged in!',
       token,
       user: userData
     });

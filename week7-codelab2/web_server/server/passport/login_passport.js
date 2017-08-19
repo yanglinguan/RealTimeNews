@@ -45,11 +45,12 @@ module.exports = new PassportLocalStrategy({
       }
 
       const token = jwt.sign(payload, config.jwtSecret);
+      console.log(token)
       const data = {
         name: user.email
       };
 
-      return done(null, data);
+      return done(null, token, data);
     })
   })
 })

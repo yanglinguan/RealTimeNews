@@ -22,10 +22,10 @@ app.use('/static', express.static(path.join(__dirname, '../client/build/static/'
 
 
 app.use(passport.initialize());
-var localSignupStrategy = require('./password/signup_passort');
-var localLoginStrategy = require('./password/login_passport');
+var localSignupStrategy = require('./passport/signup_passport');
+var localLoginStrategy = require('./passport/login_passport');
 passport.use('local-signup', localSignupStrategy);
-passport.use('locak-login', localLoginStrategy);
+passport.use('local-login', localLoginStrategy);
 
 // TODO: remove after development is done
 // app.all('*', function(req, res, next) {
