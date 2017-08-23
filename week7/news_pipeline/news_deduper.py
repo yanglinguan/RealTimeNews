@@ -36,7 +36,11 @@ def handle_message(dedupe_task_message):
     published_at_day_begin = datetime.datetime(
         published_at.year,
         published_at.month,
-        published_at.date
+        published_at.day,
+        0,
+        0,
+        0,
+        0
     )
     published_at_day_end = published_at_day_begin + datetime.timedelta(days=1)
 
