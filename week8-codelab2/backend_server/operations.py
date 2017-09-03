@@ -10,6 +10,7 @@ from datetime import datetime
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import mongodb_client
+import news_recommendation_service_client
 from cloud_amqp_client import CloudAMQPClient
 
 
@@ -23,11 +24,11 @@ NEWS_LIMIT = 100
 NEWS_LIST_BATCH_SIZE = 10 # number of news per page
 USER_NEWS_TIME_OUT_IN_SECONDS = 60 #3600
 
-LOG_CLICKS_TASK_QUEUE_URL = "amqp://wuilymgr:UIT9HWZ0J3ofsq0TsKJ_Imak6OGkQT6i@crane.rmq.cloudamqp.com/wuilymgr" # pylint: disable-msg=C0301
+LOG_CLICKS_TASK_QUEUE_URL = "amqp://wuilymgr:UIT9HWZ0J3ofsq0TsKJ_Imak6OGkQT6i@crane.rmq.cloudamqp.com/wuilymgr" # pylint: disable=C0301
 LOG_CLICKS_TASK_QUEUE_NAME = "tap-news-log-clicks-task-queue"
 
 REDIS_CLIENT = redis.StrictRedis(REDIS_HOST, REDIS_PORT)
-CLOUDAMQP_CLIENT = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
+CLOUD_AMQP_CLIENT = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
 
 def get_news_summaries_for_user(user_id, page_num):
     """ get news summarties according to user is and page number """
@@ -71,11 +72,41 @@ def get_news_summaries_for_user(user_id, page_num):
 
         sliced_news = total_news[begin_index:end_index]
 
+    # get preference for the user
+    preference = news_recommendation_service_client.get_preference_for_user(user_id)
+    topPreference = None
+
+    if preference is not None and len(preference) > 0:
+        topPreference = preference[0]
+
     for news in sliced_news:
         # Remove text field to save bandwidth.
         del news['text']
+        if news['class'] == topPreference:
+            news['reason'] = 'Recommend'
         if news['publishedAt'].date() == datetime.today().date():
             news['time'] = 'today'
 
     # since sliced_news is pickle object, it should be converted to json object for front end
     return json.loads(dumps(sliced_news))
+
+def log_news_click_for_user(user_id, news_id):
+    """ log news click """
+    message = {
+        'userId': user_id,
+        'newsId': news_id,
+        'timestamp': datetime.utcnow()
+    }
+
+    # should write log file
+    mongodb = mongodb_client.get_db()
+    mongodb[CLICK_LOGS_TABLE_NAME].insert(message)
+
+    # send log task to machine learning service for prediction
+    message = {
+        'userId': user_id,
+        'newsId': news_id,
+        'timestamp': str(datetime.utcnow())
+    }
+
+    CLOUD_AMQP_CLIENT.send_message(message)
